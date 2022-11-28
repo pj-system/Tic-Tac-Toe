@@ -1,64 +1,112 @@
-Board = {
-    7: ' ', 8: ' ', 9: ' ',
-    4: ' ', 5: ' ', 6: ' ',
-    1: ' ', 2: ' ', 3: ' ',
-}
+import random
 
 
-def Check_For_Win():
+class Game_Board:
 
-    # Horizontals
-    if Board[1] == Board[2] == Board[3] != ' ' or Board[4] == Board[5] == Board[6] != ' ' or Board[7] == Board[8] == Board[9] != ' ':
-        Winner = PLAYER_SHAPE[PLAYER]
-        return True
-    # Verticals
-    elif Board[1] == Board[4] == Board[7] != ' ' or Board[2] == Board[5] == Board[8] != ' ' or Board[3] == Board[6] == Board[9] != ' ':
-        Winner = PLAYER_SHAPE[PLAYER]
-        return True
-    # Cross
-    elif Board[7] == Board[5] == Board[3] != ' ' or Board[1] == Board[5] == Board[9] != ' ':
-        Winner = PLAYER_SHAPE[PLAYER]
-        return True
-    else:
-        return False
+    def __init__(self):
+        self.board_dict = {
+            7: ' ', 8: ' ', 9: ' ',
+            4: ' ', 5: ' ', 6: ' ',
+            1: ' ', 2: ' ', 3: ' ',
+        }
 
+    def Update(self):
 
-def Update(Board):
-    print(f"""{Board[7]} | {Board[8]} | {Board[9]}
-{Board[4]} | {Board[5]} | {Board[6]}
-{Board[1]} | {Board[2]} | {Board[3]}
-""")
+        print(
+            f'{self.board_dict[7]} | {self.board_dict[8]} | {self.board_dict[9]}\n'
+            + f'{self.board_dict[4]} | {self.board_dict[5]} | {self.board_dict[6]}\n'
+            + f'{self.board_dict[1]} | {self.board_dict[2]} | {self.board_dict[3]}'
+        )
 
+    def Check_For_Win(self):
 
-WIN_CRITERIA = False
-
-PLAYER_SHAPE = ["X", "O"]
-PLAYER = 1
-CHECK_LEGAL_MOVE = False
-
-while WIN_CRITERIA == False:
-    This_Turn = int(input(f"{PLAYER_SHAPE[PLAYER]} player's turn: "))
-    CHECK_LEGAL_MOVE = False
-
-    while CHECK_LEGAL_MOVE == False:
-
-        if Board[This_Turn] != " ":
-            This_Turn = int(
-                input(f"Illegal move - {PLAYER_SHAPE[PLAYER]} player's turn again: "))
+        # Horizontals
+        if self.board_dict[1] == self.board_dict[2] == self.board_dict[3] != ' ' or self.board_dict[4] == self.board_dict[5] == self.board_dict[6] != ' ' or self.board_dict[7] == self.board_dict[8] == self.board_dict[9] != ' ':
+            return True
+        # Verticals
+        elif self.board_dict[1] == self.board_dict[4] == self.board_dict[7] != ' ' or self.board_dict[2] == self.board_dict[5] == self.board_dict[8] != ' ' or self.board_dict[3] == self.board_dict[6] == self.board_dict[9] != ' ':
+            return True
+        # Cross
+        elif self.board_dict[7] == self.board_dict[5] == self.board_dict[3] != ' ' or self.board_dict[1] == self.board_dict[5] == self.board_dict[9] != ' ':
+            return True
         else:
-            Board[This_Turn] = PLAYER_SHAPE[PLAYER]
-            CHECK_LEGAL_MOVE = True
+            return False
 
-    WIN_CRITERIA = Check_For_Win()
+    def Draw_Move(self, coordinate, player):
+        self.board_dict[coordinate] = player
 
-    Update(Board)
+    def Check_Complate(self):
+        for key in self.board_dict:
+            if self.board_dict[key] == ' ':
+                return False
+        return True
 
-    if WIN_CRITERIA == True:
-        WINNER = PLAYER_SHAPE[PLAYER]
+    def Check_Legal(self, position):
+        if self.board_dict[position] != ' ':
+            return False
+        else:
+            return True
 
-    if PLAYER_SHAPE[PLAYER] == "X":
-        PLAYER = 1
+
+class Player:
+    def __init__(self, current_board):
+        self.board = current_board
+
+    def Check_Legal(self, position):
+        if self.board[position] != ' ':
+            return False
+        else:
+            return True
+
+
+class Ai_Player_Random(Player):
+
+    def Make_Move(self):
+        move = random.randint(1, 9)
+        return move
+
+
+class Human_Player:
+
+    def Pick_Move(self):
+        pass
+
+
+gb = Game_Board()
+End_Criteria = False
+SHAPES = ["X", "O"]
+Current_Player = 0
+
+
+def minimax(board, depth, maximisingPLayer):
+    pass
+
+
+# main loop
+while End_Criteria == False:
+    This_Turn = int(
+        input(f"{SHAPES[Current_Player]} Current_Player's turn: "))
+    Legal = False
+
+    while Legal == False:
+
+        if gb.Check_Legal(This_Turn) == False:
+            This_Turn = int(
+                input(f"Illegal move - {SHAPES[Current_Player]} Current_Player's turn again: "))
+        else:
+            gb.Draw_Move(This_Turn, SHAPES[Current_Player])
+            Legal = True
+
+    End_Criteria = gb.Check_For_Win()
+    gb.Update()
+
+    # check if game ends else change players
+    if End_Criteria == True:
+        print('Winner: ' + SHAPES[Current_Player] + '!!!')
+    elif gb.Check_Complate() == True:
+        End_Criteria = True
+        print('Draw')
+    elif SHAPES[Current_Player] == "X":
+        Current_Player = 1
     else:
-        PLAYER = 0
-
-print('Winner: ' + WINNER + '!!!')
+        Current_Player = 0
