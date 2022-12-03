@@ -28,11 +28,11 @@ while True:
         print()
         player2 = player2_dict[int(input(select_player_input.replace('<PLAYER_NUM>', '2')))]
     except KeyError:
-        print(f'Invalid option, choose between 1 and 3 inclusive.\n')
+        print(f'Invalid option, choose between {min(list(player1_dict.keys()))} and {max(list(player1_dict.keys()))} inclusive.\n')
         sleep(0.5)
         continue
     except ValueError:
-        print(f'Invalid option, choose a number that is between 1 and 3 inclusive.\n')
+        print(f'Invalid option, choose a number that is between {min(list(player1_dict.keys()))} and {max(list(player1_dict.keys()))} inclusive.\n')
         sleep(0.5)
         continue
     except Exception:
