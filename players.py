@@ -1,5 +1,6 @@
 import math
 import random
+from game_board import Game_Board
 from abc import ABC, abstractmethod
 
 class Player(ABC):
@@ -8,12 +9,12 @@ class Player(ABC):
         self.player = player
     
     @abstractmethod  # Dictates that all child classes must implement a __repr__ method
-    def __repr__(self):
+    def __repr__(self) -> str:
         """When calling print() or repr() on an instance of this class, it returns the below"""
         pass
     
     @abstractmethod  # Dictates that all child classes must implement a play_move method
-    def play_move(self):
+    def play_move(self) -> str:
         pass
 
 
@@ -22,11 +23,11 @@ class RandomPlayer(Player):
     def __init__(self, player: str) -> None:
         super().__init__(player)
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Random Player'
         
-    def play_move(self, board):
+    def play_move(self, board: Game_Board) -> str:
         list_of_moves = board.possible_moves()
         return random.choice(list_of_moves)
 
@@ -36,11 +37,11 @@ class MiniMaxPlayer(Player):
     def __init__(self, player: str) -> None:
         super().__init__(player)
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Minimax Player'
     
-    def play_move(self, board, player, maximising_player):
+    def play_move(self, board: Game_Board, player: str, maximising_player: bool) -> list:
         other_player = "X" if player == "O" else "O"
 
         if board.check_winner(other_player):

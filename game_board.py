@@ -2,14 +2,12 @@
 
 class Game_Board:
 
-    def __init__(self):
-        
+    def __init__(self) -> None:
         self.board_dict = {
             7: ' ', 8: ' ', 9: ' ',
             4: ' ', 5: ' ', 6: ' ',
             1: ' ', 2: ' ', 3: ' ',
         }
-
         self.win_options = [
             [7, 8, 9], [4, 5, 6], [1, 2, 3],
             [7, 4, 1], [8, 5, 2], [9, 6, 3],
@@ -17,7 +15,7 @@ class Game_Board:
         ]
 
     # draws the board state
-    def draw_board(self):
+    def draw_board(self) -> None:
         print(
             f'{self.board_dict[7]} | {self.board_dict[8]} | {self.board_dict[9]}\n'
             + f'{self.board_dict[4]} | {self.board_dict[5]} | {self.board_dict[6]}\n'
@@ -25,10 +23,8 @@ class Game_Board:
         )
 
     # check for any win
-    def check_for_win(self):
-
+    def check_for_win(self) -> bool:
         win = False
-
         for options in self.win_options:
             first = self.board_dict[options[0]]
             for option in options:
@@ -40,12 +36,10 @@ class Game_Board:
         return win
 
     # check if specific player won
-    def check_winner(self, letter):
-
+    def check_winner(self, player: str) -> bool:
         win = False
-
         for options in self.win_options:
-            first = letter
+            first = player
             for option in options:
                 win = True if first == self.board_dict[option] != ' ' else False
                 if win == False:
@@ -54,23 +48,23 @@ class Game_Board:
                 return win
         return win
 
-    def draw_move(self, coordinate, player):
-        self.board_dict[coordinate] = player
+    def draw_move(self, position: int, player: str) -> None:
+        self.board_dict[position] = player
 
-    def check_complete(self):
+    def check_complete(self) -> bool:
         for key in self.board_dict:
             if self.board_dict[key] == ' ':
                 return False
         return True
 
-    def check_legal(self, position):
+    def check_legal(self, position: int):
         if self.board_dict[position] != ' ':
             raise AssertionError("Illegal Move!")
         else:
             return True
 
     # returns number of free spaces on the board
-    def num_free_spaces(self):
+    def num_free_spaces(self) -> int:
         free = " "
         count = 0
         for value in self.board_dict.values():
@@ -79,7 +73,7 @@ class Game_Board:
         return count
 
     # returns a list of possible moves
-    def possible_moves(self):
+    def possible_moves(self) -> list:
         free = " "
         pos_moves = []
         for key, value in self.board_dict.items():
