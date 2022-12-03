@@ -46,11 +46,13 @@ while end_criteria == False:
                 continue
             else:
                 break
-        gb.draw_move(move_to_play, current_player)
+        gb.draw_move(position=move_to_play, player=current_player)
 
     else:
         move_to_play = opp_player.play_move(board=gb, player=current_player, maximising_player=True)
-        gb.draw_move(coordinate=move_to_play[1], player=current_player)
+        if isinstance(move_to_play, (list, tuple)):
+            move_to_play = move_to_play[1]
+        gb.draw_move(position=move_to_play, player=current_player)
 
     end_criteria = gb.check_for_win()
     gb.draw_board()

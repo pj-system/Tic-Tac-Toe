@@ -27,7 +27,7 @@ class RandomPlayer(Player):
         """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Random Player'
         
-    def play_move(self, board: Game_Board) -> str:
+    def play_move(self, board: Game_Board, *args, **kwargs) -> str:
         list_of_moves = board.possible_moves()
         return random.choice(list_of_moves)
 
