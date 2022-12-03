@@ -1,55 +1,61 @@
 from game_board import Game_Board
-from players import RandomPlayer, MiniMaxPlayer
+from players import UserPlayer, RandomPlayer, MiniMaxPlayer
 from time import sleep
 
 # Set up board and players
 end_criteria = False
 gb = Game_Board()
-players = {
-    1: RandomPlayer(player="O"),
-    2: MiniMaxPlayer(player="O")
+player1_dict = {
+    1: UserPlayer(player="X"),
+    2: RandomPlayer(player="X"),
+    3: MiniMaxPlayer(player="X")
+    # More to come soon™
+}
+player2_dict = {
+    1: UserPlayer(player="O"),
+    2: RandomPlayer(player="O"),
+    3: MiniMaxPlayer(player="O")
     # More to come soon™
 }
 select_player_input = (
-    "Select the player you wish to play against:\n"
-    + ''.join([f"{idx} - {repr(player)}\n" for idx, player in players.items()])
+    "Select player <PLAYER_NUM>:\n"
+    + ''.join([f"{idx} - {repr(player)}\n" for idx, player in player1_dict.items()])
     + "Choice: "
 )
 while True:
     try:
-        opp_player = players[int(input(select_player_input))]
+        player1 = player1_dict[int(input(select_player_input.replace('<PLAYER_NUM>', '1')))]
+        print()
+        player2 = player2_dict[int(input(select_player_input.replace('<PLAYER_NUM>', '2')))]
     except KeyError:
-        print('Invalid option, choose between 1 and 2\n')
+        print(f'Invalid option, choose between 1 and 3 inclusive.\n')
         sleep(0.5)
         continue
     except ValueError:
-        print('Invalid option, choose a number that is either 1 or 2\n')
+        print(f'Invalid option, choose a number that is between 1 and 3 inclusive.\n')
+        sleep(0.5)
+        continue
+    except Exception:
+        print("I didn't think you could screw up this badly, reading the instructions again.\n")
         sleep(0.5)
         continue
     else:
         break
-current_player = "X" if opp_player.player == "O" else "O"
+    
+# Player 1 with symbol X starts first
+current_player = player1.player
 print()
 
 # main loop
 while end_criteria == False:
     if current_player == "X":
-        while True:
-            try:
-                move_to_play = int(input(f"{current_player} Player's turn: "))
-                gb.check_legal(move_to_play)
-            except ValueError:
-                print("Enter a number between 1 and 9.\n")
-                continue
-            except AssertionError:
-                print("Illegal move - try again.\n")
-                continue
-            else:
-                break
+        move_to_play = player1.play_move(board=gb, player=current_player, maximising_player=True)
+        if isinstance(move_to_play, (list, tuple)):
+            move_to_play = move_to_play[1]
         gb.draw_move(position=move_to_play, player=current_player)
 
     else:
-        move_to_play = opp_player.play_move(board=gb, player=current_player, maximising_player=True)
+        move_to_play = player2.play_move(board=gb, player=current_player, maximising_player=True)
         if isinstance(move_to_play, (list, tuple)):
             move_to_play = move_to_play[1]
         gb.draw_move(position=move_to_play, player=current_player)
