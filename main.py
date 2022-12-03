@@ -6,19 +6,18 @@ from time import sleep
 end_criteria = False
 gb = Game_Board()
 players = {
-    1: RandomPlayer,
-    2: MiniMaxPlayer
+    1: RandomPlayer(player="O"),
+    2: MiniMaxPlayer(player="O")
     # More to come soon™
 }
 select_player_input = (
     "Select the player you wish to play against:\n"
-    + "1 - Random Player\n"
-    + "2 - Minimax Player\n"
+    + ''.join([f"{idx} - {repr(player)}\n" for idx, player in players.items()])
     + "Choice: "
 )
 while True:
     try:
-        opp_player = players[int(input(select_player_input))](player="O")
+        opp_player = players[int(input(select_player_input))]
     except KeyError:
         print('Invalid option, choose between 1 and 2\n')
         sleep(0.5)
@@ -60,10 +59,8 @@ while end_criteria == False:
     # check if game ends else change players
     if end_criteria == True:
         print(f'Winner: {current_player} !!!')
-        
     elif gb.check_complete() == True:
         end_criteria = True
         print('Draw')
-        
     else:
         current_player = "X" if current_player == "O" else "O"

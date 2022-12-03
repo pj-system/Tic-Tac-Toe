@@ -9,6 +9,7 @@ class Player(ABC):
     
     @abstractmethod  # Dictates that all child classes must implement a __repr__ method
     def __repr__(self):
+        """When calling print() or repr() on an instance of this class, it returns the below"""
         pass
     
     @abstractmethod  # Dictates that all child classes must implement a play_move method
@@ -22,6 +23,7 @@ class RandomPlayer(Player):
         super().__init__(player)
         
     def __repr__(self):
+        """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Random Player'
         
     def play_move(self, board):
@@ -35,6 +37,7 @@ class MiniMaxPlayer(Player):
         super().__init__(player)
     
     def __repr__(self):
+        """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Minimax Player'
     
     def play_move(self, board, player, maximising_player):
