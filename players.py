@@ -1,6 +1,6 @@
 import math
 import random
-from game_board import Game_Board
+from game_board import GameBoard
 from abc import ABC, abstractmethod
 
 class Player(ABC):
@@ -14,7 +14,7 @@ class Player(ABC):
         pass
     
     @abstractmethod  # Dictates that all child classes must implement a play_move method
-    def play_move(self, board: Game_Board) -> str:
+    def play_move(self, board: GameBoard) -> str:
         pass
 
 
@@ -27,7 +27,7 @@ class UserPlayer(Player):
         """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Yourself'
 
-    def play_move(self, board: Game_Board, *args, **kwargs) -> str:
+    def play_move(self, board: GameBoard, *args, **kwargs) -> str:
         while True:
             try:
                 move_to_play = int(input(f"{self.player} Player's turn: "))
@@ -55,7 +55,7 @@ class RandomPlayer(Player):
         """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Random Player'
 
-    def play_move(self, board: Game_Board, *args, **kwargs) -> str:
+    def play_move(self, board: GameBoard, *args, **kwargs) -> str:
         list_of_moves = board.possible_moves()
         return random.choice(list_of_moves)
 
@@ -69,7 +69,7 @@ class MiniMaxPlayer(Player):
         """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Minimax Player'
 
-    def play_move(self, board: Game_Board, player: str, maximising_player: bool, *args, **kwargs) -> list:
+    def play_move(self, board: GameBoard, player: str, maximising_player: bool, *args, **kwargs) -> list:
         other_player = "X" if player == "O" else "O"
 
         if board.check_winner(other_player):

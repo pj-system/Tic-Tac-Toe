@@ -1,6 +1,6 @@
-"""Contains the Game_Board class which holds the board state and possible actions that can be performed."""
+"""Contains the GameBoard class which holds the board state and possible actions that can be performed."""
 
-class Game_Board:
+class GameBoard:
 
     def __init__(self) -> None:
         self.board_dict = {

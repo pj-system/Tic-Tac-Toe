@@ -1,10 +1,10 @@
-from game_board import Game_Board
+from game_board import GameBoard
 from players import UserPlayer, RandomPlayer, MiniMaxPlayer
 from time import sleep
 
 # Set up board and players
 end_criteria = False
-gb = Game_Board()
+gb = GameBoard()
 player1_dict = {
     1: UserPlayer(player="X"),
     2: RandomPlayer(player="X"),
