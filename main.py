@@ -36,7 +36,7 @@ while True:
         sleep(0.5)
         continue
     except Exception:
-        print("I didn't think you could screw up this badly, reading the instructions again.\n")
+        print("I didn't think you could screw up this badly, try reading the instructions again.\n")
         sleep(0.5)
         continue
     else:
