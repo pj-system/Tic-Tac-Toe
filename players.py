@@ -69,7 +69,7 @@ class MiniMaxPlayer(Player):
         """When calling print() or repr() on an instance of this class, it returns the below"""
         return 'Minimax Player'
 
-    def play_move(self, board: GameBoard, player: str, maximising_player: bool, *args, **kwargs) -> list:
+    def play_move(self, board: GameBoard, player: str, maximising_player: bool=True, *args, **kwargs) -> list:
         other_player = "X" if player == "O" else "O"
 
         if board.check_winner(other_player):
@@ -84,7 +84,7 @@ class MiniMaxPlayer(Player):
 
             for move in list_of_moves:
                 board.board_dict[move] = player
-                Eva = self.play_move(board, other_player, False)
+                Eva = self.play_move(board=board, player=other_player, maximising_player=False)
                 if Eva[0] > maxEva:
                     best_move = move
                 maxEva = max(Eva[0], maxEva)
@@ -97,7 +97,7 @@ class MiniMaxPlayer(Player):
 
             for move in list_of_moves:
                 board.board_dict[move] = player
-                Eva = self.play_move(board, other_player, True)
+                Eva = self.play_move(board=board, player=other_player, maximising_player=True)
                 if Eva[0] < minEva:
                     best_move = move
                 minEva = min(Eva[0], minEva)
