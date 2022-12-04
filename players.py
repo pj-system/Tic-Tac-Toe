@@ -73,33 +73,33 @@ class MiniMaxPlayer(Player):
         other_player = "X" if player == "O" else "O"
 
         if board.check_winner(other_player):
-            return [(1*board.num_free_spaces() + 1), None] if maximising_player == False else [(-1*board.num_free_spaces() - 1), None]
+            return [None, (board.num_free_spaces() + 1)] if maximising_player == False else [None, (-board.num_free_spaces() - 1)]
 
         elif board.check_complete():
-            return [0, None]
+            return [None, 0]
 
         if maximising_player:  # maximising player
-            maxEva = -(math.inf)
+            maxEva = -math.inf
             list_of_moves = board.possible_moves()
 
             for move in list_of_moves:
                 board.board_dict[move] = player
-                Eva = self.play_move(board=board, player=other_player, maximising_player=False)
-                if Eva[0] > maxEva:
+                _, Eva = self.play_move(board=board, player=other_player, maximising_player=False)
+                if Eva > maxEva:
                     best_move = move
-                maxEva = max(Eva[0], maxEva)
+                maxEva = max(Eva, maxEva)
                 board.board_dict[move] = " "
-            return [maxEva, best_move]
+            return [best_move, maxEva]
 
         else:  # minimising player
-            minEva = (math.inf)
+            minEva = math.inf
             list_of_moves = board.possible_moves()
 
             for move in list_of_moves:
                 board.board_dict[move] = player
-                Eva = self.play_move(board=board, player=other_player, maximising_player=True)
-                if Eva[0] < minEva:
+                _, Eva = self.play_move(board=board, player=other_player, maximising_player=True)
+                if Eva < minEva:
                     best_move = move
-                minEva = min(Eva[0], minEva)
+                minEva = min(Eva, minEva)
                 board.board_dict[move] = " "
-            return [minEva, best_move]
+            return [best_move, minEva]

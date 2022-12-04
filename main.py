@@ -51,13 +51,13 @@ while end_criteria == False:
     if current_player == "X":
         move_to_play = player1.play_move(board=gb, player=current_player)
         if isinstance(move_to_play, (list, tuple)):
-            move_to_play = move_to_play[1]
+            move_to_play = move_to_play[0]
         gb.draw_move(position=move_to_play, player=current_player)
 
     else:
         move_to_play = player2.play_move(board=gb, player=current_player)
         if isinstance(move_to_play, (list, tuple)):
-            move_to_play = move_to_play[1]
+            move_to_play = move_to_play[0]
         gb.draw_move(position=move_to_play, player=current_player)
 
     end_criteria = gb.check_for_win()
