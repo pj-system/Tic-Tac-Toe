@@ -14,16 +14,16 @@ class GameBoard:
             [1, 5, 9], [7, 5, 3]
         ]
 
-    # draws the board state
     def draw_board(self) -> None:
+        """Draws the board state in terminal."""
         print(
             f'{self.board_dict[7]} | {self.board_dict[8]} | {self.board_dict[9]}\n'
             + f'{self.board_dict[4]} | {self.board_dict[5]} | {self.board_dict[6]}\n'
             + f'{self.board_dict[1]} | {self.board_dict[2]} | {self.board_dict[3]}\n'
         )
 
-    # check for any win
     def check_for_win(self) -> bool:
+        """Checks for any win by either players."""
         win = False
         for options in self.win_options:
             first = self.board_dict[options[0]]
@@ -35,8 +35,8 @@ class GameBoard:
                 return win
         return win
 
-    # check if specific player won
     def check_winner(self, player: str) -> bool:
+        """Check if a specific player has won."""
         win = False
         for options in self.win_options:
             first = player
@@ -49,22 +49,30 @@ class GameBoard:
         return win
 
     def draw_move(self, position: int, player: str) -> None:
+        """Draw a move on the board.
+        
+        Args:
+            position (int): Integer representing the position of the board (1 to 9 inclusive)
+            player (str): Symbol of the player that's drawing the move ('X' or 'O')
+        """
         self.board_dict[position] = player
 
     def check_complete(self) -> bool:
+        """Checks if the board has been complete (i.e., no free spaces left)."""
         for key in self.board_dict:
             if self.board_dict[key] == ' ':
                 return False
         return True
 
     def check_legal(self, position: int):
+        """Checks if a move is legal, an assertion error will be raised if it is not."""
         if self.board_dict[position] != ' ':
             raise AssertionError("Illegal Move!")
         else:
             return True
 
-    # returns number of free spaces on the board
     def num_free_spaces(self) -> int:
+        """Returns the number of free spaces on the board."""
         free = " "
         count = 0
         for value in self.board_dict.values():
@@ -74,6 +82,7 @@ class GameBoard:
 
     # returns a list of possible moves
     def possible_moves(self) -> list:
+        """Returns a list of all possible moves on the current board."""
         free = " "
         pos_moves = []
         for key, value in self.board_dict.items():
