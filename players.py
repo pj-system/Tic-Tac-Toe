@@ -157,9 +157,6 @@ class TabQLPLayer(Player):
                 0, [max(options_Q_dict.values()), options_dict[next_move]])
             return int(next_move)
 
-    def update_q(self):
-        pass
-
     def get_q(self, hash: str) -> float:
         """
         Returns the Q Value for a given move if known, else initialises Q for that move and returns inital Q
@@ -189,7 +186,6 @@ class TabQLPLayer(Player):
         """
         Trains the AI
         """
-        ticcount = 0
         for _ in range(training_epsiodes):
             current_player = 'X'
             end_criteria = False
@@ -238,13 +234,4 @@ class TabQLPLayer(Player):
             self.move_history = []
             gb = GameBoard()
 
-            # print(ticcount)
-
-            ticcount = ticcount + 1
-
         self.epsilon = 1
-
-
-# player2 = TabQLPLayer(player="O")
-# coach = RandomPlayer(player="X")
-# player2.learning(coach, 100)

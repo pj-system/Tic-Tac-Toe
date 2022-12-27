@@ -1,5 +1,6 @@
 """Contains the GameBoard class which holds the board state and possible actions that can be performed."""
 
+
 class GameBoard:
 
     def __init__(self) -> None:
@@ -50,7 +51,7 @@ class GameBoard:
 
     def draw_move(self, position: int, player: str) -> None:
         """Draw a move on the board.
-        
+
         Args:
             position (int): Integer representing the position of the board (1 to 9 inclusive)
             player (str): Symbol of the player that's drawing the move ('X' or 'O')
@@ -89,3 +90,17 @@ class GameBoard:
             if value == free:
                 pos_moves.append(key)
         return pos_moves
+
+    # def hash_state(self) -> str:
+    #     """Returns a hash value of the current board state
+    #     followed by 9 digit string where 0 = " ", 1 = X, 2 = O
+    #     """
+    #     hashvalue = ''
+    #     for key, value in self.board_dict.items():
+    #         if value == 'X':
+    #             hashvalue = ''.join([hashvalue, '1'])
+    #         elif value == 'O':
+    #             hashvalue = ''.join([hashvalue, '2'])
+    #         elif value == ' ':
+    #             hashvalue = ''.join([hashvalue, '0'])
+    #     return hashvalue
